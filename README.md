@@ -1,5 +1,8 @@
 # Cat+ Manifests
 
+> [!WARNING]
+> This is a WIP repository, it is not yet stable.
+
 ## Summary
 
 This repository contains all the manifests for Cat+ to deploy on Kubernetes. 
