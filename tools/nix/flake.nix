@@ -40,6 +40,7 @@
 
           # Things needed only at compile-time.
           packagesBasic = with pkgs; [
+            age
             bash
             coreutils
             curl
