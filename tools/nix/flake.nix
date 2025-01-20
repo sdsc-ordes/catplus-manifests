@@ -28,7 +28,6 @@
     {
       nixpkgs,
       flake-utils,
-      rust-overlay,
       ...
     }:
     let
@@ -36,9 +35,11 @@
       defineOutput =
         system:
         let
+          # inherit from nixpkgs
+          pkgs = nixpkgs.legacyPackages.${system};
 
           # Things needed only at compile-time.
-          packagesBasic = with nixpkgs; [
+          packagesBasic = with pkgs; [
             bash
             coreutils
             curl
@@ -52,17 +53,14 @@
             yamlfmt
           ];
 
-          # Things needed only at compile-time.
-          packagesDev = with nixpkgs; [
-          ];
         in
         {
           devShells = {
-            default = nixpkgs.mkShell {
+            default = pkgs.mkShell {
               packages = packagesBasic;
             };
 
-            ci = nixpkgs.mkShell {
+            ci = pkgs.mkShell {
               packages = packagesBasic;
 
               # Due to some weird handling of TMPDIR inside containers:
