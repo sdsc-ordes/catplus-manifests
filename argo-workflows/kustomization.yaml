@@ -2,8 +2,8 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
 resources:
-- https://github.com/argoproj/argo-workflows/tree/v3.6.2/manifests/base
-- https://github.com/argoproj/argo-workflows/tree/v3.6.2/manifests/cluster-install/workflow-controller-rbac
-- https://github.com/argoproj/argo-workflows/tree/v3.6.2/manifests/cluster-install/argo-server-rbac
+- "git@github.com:argoproj/argo-workflows/manifests/base?ref=v3.6.2"
+- "git@github.com:argoproj/argo-workflows/manifests/cluster-install/workflow-controller-rbac?ref=v3.6.2"
+- "git@github.com:argoproj/argo-workflows/manifests/cluster-install/argo-server-rbac?ref=v3.6.2"
 
 namespace: argo
