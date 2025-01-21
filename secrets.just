@@ -12,6 +12,11 @@ generate-key:
   @echo "Generating key..."
   @age-keygen -o {{SOPS_AGE_KEY_FILE}}
 
+# Update key configs based on .sops.yaml.
+update-keys:
+  @echo "Updating keys in secret files"
+  @sops updatekeys {{SECRETS_ENC}}
+
 # see here for usage of sops+age: https://github.com/getsops/sops?tab=readme-ov-file#encrypting-using-age
 # create decrypted secrets file.
 decrypt:
@@ -26,3 +31,4 @@ encrypt:
 # Deploy decrypted secrets to cluster.
 deploy:
   @sops exec-file {{SECRETS_ENC}} kubectl apply --kustomize tmp-file
+
