@@ -26,7 +26,7 @@ decrypt:
 # Create encrypted secrets file.
 encrypt:
   @echo "Encrypting secrets..."
-  @sops --age $(grep -oP 'public key: \K(.*)' {{SOPS_AGE_KEY_FILE}}) -e "{{SECRETS_DEC}}" > "{{SECRETS_ENC}}"
+  @sops --age $(grep -oP 'public key: \K(.*)' {{SOPS_AGE_KEY_FILE}}) -e "{{SECRETS_DEC}}" > "{{SECRETS_ENC}}" && rm {{SECRETS_DEC}}
 
 # Deploy decrypted secrets to cluster.
 deploy:
