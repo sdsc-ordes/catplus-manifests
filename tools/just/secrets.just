@@ -43,5 +43,5 @@ alias apply := deploy
 # Deploy decrypted secrets to cluster.
 deploy:
   @cd "{{root_dir}}" && \
-    sops exec-file {{SECRETS_ENC}} kubectl apply --kustomize tmp-file
+    sops exec-file {{SECRETS_ENC}} 'kubectl apply -f {}'
 
