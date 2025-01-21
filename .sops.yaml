@@ -1,5 +1,5 @@
 creation_rules:
-  - path_regex: secrets/secrets.enc.yaml
+  - path_regex: .*/secrets/.*
     encrypted_regex: "^.*(user|password|token)"
     age: >-
       age1km50yt89npfghhnk4j6xrf0cxhvefd2vr9aj9z70ycfsgu2q73jqg7f7f4,
