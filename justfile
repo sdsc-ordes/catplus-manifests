@@ -6,18 +6,21 @@ root_dir := `git rev-parse --show-toplevel`
 
 # Default recipe to list all recipes.
 default:
-    just --list
+    just --list --no-aliases
 
+alias fmt := format
 # Format manifests.
-fmt *args:
+format *args:
     yamlfmt **/*.y{a,}ml
 
 
+alias apply := deploy
 # Apply manifests to the cluster.
 deploy *args:
     cd "{{root_dir}}" && \
     kubectl apply --kustomize
 
+alias dev := nix-develop
 # Enter a Nix development shell.
 nix-develop *args:
     echo "Starting nix developer shell in './tools/nix/flake.nix'."

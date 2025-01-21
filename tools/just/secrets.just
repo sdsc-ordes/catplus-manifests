@@ -5,8 +5,9 @@ set shell := ["bash", "-cue"]
 
 # Default recipe to list all recipes.
 default:
-    just --list secrets
+    just --list secrets --no-aliases
 
+alias keygen := generate-key
 # Create key file to use with sops.
 generate-key:
   @echo "Generating key..."
@@ -28,6 +29,7 @@ encrypt:
   @echo "Encrypting secrets..."
   @sops --age $(grep -oP 'public key: \K(.*)' {{SOPS_AGE_KEY_FILE}}) -e "{{SECRETS_DEC}}" > "{{SECRETS_ENC}}" && rm {{SECRETS_DEC}}
 
+alias apply := deploy
 # Deploy decrypted secrets to cluster.
 deploy:
   @sops exec-file {{SECRETS_ENC}} kubectl apply --kustomize tmp-file
