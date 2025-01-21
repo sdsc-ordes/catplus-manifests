@@ -1,6 +1,7 @@
 SECRETS_ENC := "./secrets/secrets.enc.yaml"
 SECRETS_DEC := "./secrets/secrets.dec.yaml"
-SOPS_AGEKEY := "./.sops.agekey"
+export SOPS_AGE_KEY_FILE := "./.sops.agekey"
+set shell := ["bash", "-cue"]
 
 # Default recipe to list all recipes.
 default:
@@ -9,20 +10,19 @@ default:
 # Create key file to use with sops.
 generate-key:
   @echo "Generating key..."
-  @age-keygen -o {{SOPS_AGEKEY}}
+  @age-keygen -o {{SOPS_AGE_KEY_FILE}}
 
+# see here for usage of sops+age: https://github.com/getsops/sops?tab=readme-ov-file#encrypting-using-age
 # create decrypted secrets file.
 decrypt:
   @echo "Decrypting secrets..."
-  # see here for usage of sops+age: https://github.com/getsops/sops?tab=readme-ov-file#encrypting-using-age
-  @sops --age <(grep -oP 'public key: \K(.*)' {{SOPS_AGEKEY}}) -d "{{SECRETS_ENC}}" > "{{SECRETS_DEC}}"
+  @sops --age $(grep -oP 'public key: \K(.*)' {{SOPS_AGE_KEY_FILE}}) -d "{{SECRETS_ENC}}" > "{{SECRETS_DEC}}"
 
 # Create encrypted secrets file.
 encrypt:
   @echo "Encrypting secrets..."
-  @sops --age <(grep -oP 'public key: \K(.*)' {{SOPS_AGEKEY}}) -e "{{SECRETS_DEC}}" > "{{SECRETS_ENC}}"
+  @sops --age $(grep -oP 'public key: \K(.*)' {{SOPS_AGE_KEY_FILE}}) -e "{{SECRETS_DEC}}" > "{{SECRETS_ENC}}"
 
-# Deploy secrets to cluster
+# Deploy decrypted secrets to cluster.
 deploy:
-  @kubectl apply --kustomize secrets
-  @rm {{SECRETS_DEC}}
+  @sops exec-file {{SECRETS_ENC}} kubectl apply --kustomize tmp-file
