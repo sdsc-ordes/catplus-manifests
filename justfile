@@ -27,5 +27,5 @@ nix-develop *args:
     nix develop ./tools/nix#default --accept-flake-config --command "${cmd[@]}"
 
 # Manage secrets. Run `just secrets` for more info
-mod secrets 
+mod secrets 'tools/just/secrets.just'
 
