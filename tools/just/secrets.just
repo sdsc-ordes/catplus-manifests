@@ -5,6 +5,7 @@ export SOPS_AGE_KEY_FILE := "./.sops.agekey"
 set shell := ["bash", "-cue"]
 
 # Default recipe to list all recipes.
+[private]
 default:
     just --list secrets --no-aliases
 

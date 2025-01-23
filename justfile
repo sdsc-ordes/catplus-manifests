@@ -5,6 +5,7 @@ root_dir := `git rev-parse --show-toplevel`
 
 
 # Default recipe to list all recipes.
+[private]
 default:
     just --list --no-aliases
 
