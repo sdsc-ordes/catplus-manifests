@@ -20,7 +20,7 @@ alias apply := deploy
 # Apply manifests to the cluster.
 deploy *args:
     @cd "{{root_dir}}" && \
-    kubectl apply --kustomize
+    kubectl apply --kustomize .
 
 alias dev := nix-develop
 # Enter a Nix development shell.
