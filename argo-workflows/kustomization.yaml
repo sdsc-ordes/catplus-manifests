@@ -1,0 +1,8 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - "git@github.com:argoproj/argo-workflows/manifests/base?ref=v3.6.2"
+  - "git@github.com:argoproj/argo-workflows/manifests/cluster-install/workflow-controller-rbac?ref=v3.6.2"
+  - "git@github.com:argoproj/argo-workflows/manifests/cluster-install/argo-server-rbac?ref=v3.6.2"
+  - ./service-account-token.yaml
+namespace: argo
