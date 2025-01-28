@@ -35,8 +35,7 @@ decrypt:
 encrypt:
   @echo "Encrypting secrets..."
   @cd "{{root_dir}}" && \
-    sops --age $(grep -oP 'public key: \K(.*)' {{SOPS_AGE_KEY_FILE}}) \
-      -e "{{SECRETS_DEC}}" \
+    sops -e "{{SECRETS_DEC}}" \
       > "{{SECRETS_ENC}}" && \
     rm {{SECRETS_DEC}}
 
