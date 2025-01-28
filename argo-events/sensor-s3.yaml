@@ -1,0 +1,46 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Sensor
+metadata:
+  name: sensor-s3
+spec:
+  dependencies:
+    - name: upload-event-dep
+      eventSourceName: catplus-s3
+      eventName: upload-event
+  triggers:
+    - template:
+        name: minio-workflow-trigger
+        k8s:
+          operation: create
+          source:
+            resource:
+              apiVersion: argoproj.io/v1alpha1
+              kind: Workflow
+              metadata:
+                generateName: artifact-workflow-
+                namespace: argo
+              spec:
+                entrypoint: echo
+                arguments:
+                  parameters:
+                    - name: message
+                      # the value will get overridden by event payload from test-dep
+                      value: THIS_WILL_BE_REPLACED
+                templates:
+                  - name: echo
+                    inputs:
+                      parameters:
+                        - name: message
+                    container:
+                      command:
+                        - echo
+                      image: busybox
+                      args: ["{{inputs.parameters.message}}"]
+          # The container args from the workflow are overridden by the s3 notification key
+          parameters:
+            - src:
+                dependencyName: upload-event-dep
+                dataKey: notification.0.s3.object.key
+              dest: spec.arguments.parameters.0.value
+      retryStrategy:
+        steps: 3

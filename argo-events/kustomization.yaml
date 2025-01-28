@@ -6,4 +6,6 @@ resources:
   - "https://github.com/argoproj/argo-events/manifests/extensions/validating-webhook?ref=v1.9.5"
   - ./eventbus.yaml
   - ./eventsource.yaml
+  - ./sensor-s3.yaml
+  - ./create-wf-clusterrole.yaml
 namespace: argo-events

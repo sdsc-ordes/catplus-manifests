@@ -4,7 +4,7 @@ metadata:
   name: catplus-s3
 spec:
   minio:
-    example:
+    upload-event:
       # bucket information
       bucket:
         # name of the bucket
