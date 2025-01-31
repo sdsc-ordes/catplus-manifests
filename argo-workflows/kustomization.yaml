@@ -7,4 +7,13 @@ resources:
   - ./service-account-token.yaml
 patchesStrategicMerge:
   - patch-clusterrolebinding.yaml
+patches:
+- path: patch-add-role-ns.yaml
+  target:
+    kind: ClusterRoleBinding
+    name: argo-server-binding
+- path: patch-add-role-ns.yaml
+  target:
+    kind: ClusterRoleBinding
+    name: argo-binding
 namespace: argo
