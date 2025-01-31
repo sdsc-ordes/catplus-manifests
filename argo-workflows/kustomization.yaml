@@ -5,8 +5,6 @@ resources:
   - "https://github.com/argoproj/argo-workflows/manifests/cluster-install/workflow-controller-rbac?ref=v3.6.2"
   - "https://github.com/argoproj/argo-workflows/manifests/cluster-install/argo-server-rbac?ref=v3.6.2"
   - ./service-account-token.yaml
-patchesStrategicMerge:
-  - patch-clusterrolebinding.yaml
 patches:
 - path: patch-add-role-ns.yaml
   target:

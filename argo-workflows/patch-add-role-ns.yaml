@@ -1,4 +1,3 @@
 - op: add 
-  path: /subjects/0/
-  value:
-    namespace: argo
+  path: /subjects/0/namespace
+  value: argo
