@@ -44,8 +44,10 @@
             bash
             coreutils
             curl
+            fd
             findutils
             git
+            kubernetes-helm
             jq
             just
             kubectl
