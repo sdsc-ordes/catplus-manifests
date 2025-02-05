@@ -1,12 +1,12 @@
 ---
-# Source: solr/charts/zookeeper/templates/svc.yaml
+# Source: solr-external/charts/solr/charts/zookeeper/templates/svc-headless.yaml
 apiVersion: v1
 kind: Service
 metadata:
-  name: solr-zookeeper
+  name: release-name-zookeeper-headless
   namespace: default
   labels:
-    app.kubernetes.io/instance: solr
+    app.kubernetes.io/instance: release-name
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: zookeeper
     app.kubernetes.io/version: 3.9.3
@@ -14,12 +14,12 @@ metadata:
     app.kubernetes.io/component: zookeeper
 spec:
   type: ClusterIP
-  sessionAffinity: None
+  clusterIP: None
+  publishNotReadyAddresses: true
   ports:
     - name: tcp-client
       port: 2181
       targetPort: client
-      nodePort: null
     - name: tcp-follower
       port: 2888
       targetPort: follower
@@ -27,6 +27,6 @@ spec:
       port: 3888
       targetPort: election
   selector:
-    app.kubernetes.io/instance: solr
+    app.kubernetes.io/instance: release-name
     app.kubernetes.io/name: zookeeper
     app.kubernetes.io/component: zookeeper

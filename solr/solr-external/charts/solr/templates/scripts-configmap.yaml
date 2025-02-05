@@ -1,12 +1,12 @@
 ---
-# Source: solr/templates/scripts-configmap.yaml
+# Source: solr-external/charts/solr/templates/scripts-configmap.yaml
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: solr-scripts
+  name: release-name-solr-scripts
   namespace: "default"
   labels:
-    app.kubernetes.io/instance: solr
+    app.kubernetes.io/instance: release-name
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: solr
     app.kubernetes.io/version: 9.8.0
@@ -40,10 +40,10 @@ data:
     fi
   setup.sh: |-
     #!/bin/bash
-    NODE_ID="${MY_POD_NAME#"solr-"}"
+    NODE_ID="${MY_POD_NAME#"release-name-solr-"}"
     if [[ "$NODE_ID" -eq "0" ]]; then
         export SOLR_CLOUD_BOOTSTRAP=yes
     fi
     # Use hostname instead of IP to register in ZooKeeper
-    export SOLR_HOST="${MY_POD_NAME}.solr-headless.default.svc.cluster.local"
+    export SOLR_HOST="${MY_POD_NAME}.release-name-solr-headless.default.svc.cluster.local"
     /opt/bitnami/scripts/solr/entrypoint.sh /opt/bitnami/scripts/solr/run.sh

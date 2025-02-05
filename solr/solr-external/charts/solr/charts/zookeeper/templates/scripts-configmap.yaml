@@ -1,12 +1,12 @@
 ---
-# Source: solr/charts/zookeeper/templates/scripts-configmap.yaml
+# Source: solr-external/charts/solr/charts/zookeeper/templates/scripts-configmap.yaml
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: solr-zookeeper-scripts
+  name: release-name-zookeeper-scripts
   namespace: default
   labels:
-    app.kubernetes.io/instance: solr
+    app.kubernetes.io/instance: release-name
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: zookeeper
     app.kubernetes.io/version: 3.9.3

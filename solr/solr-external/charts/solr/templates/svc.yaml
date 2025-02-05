@@ -1,12 +1,12 @@
 ---
-# Source: solr/templates/svc.yaml
+# Source: solr-external/charts/solr/templates/svc.yaml
 apiVersion: v1
 kind: Service
 metadata:
-  name: solr
+  name: release-name-solr
   namespace: "default"
   labels:
-    app.kubernetes.io/instance: solr
+    app.kubernetes.io/instance: release-name
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: solr
     app.kubernetes.io/version: 9.8.0
@@ -22,6 +22,6 @@ spec:
       targetPort: http
       nodePort: null
   selector:
-    app.kubernetes.io/instance: solr
+    app.kubernetes.io/instance: release-name
     app.kubernetes.io/name: solr
     app.kubernetes.io/component: solr

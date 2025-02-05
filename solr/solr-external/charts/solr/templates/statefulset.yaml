@@ -1,11 +1,11 @@
 ---
-# Source: solr/templates/statefulset.yaml
+# Source: solr-external/charts/solr/templates/statefulset.yaml
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: solr
+  name: release-name-solr
   labels:
-    app.kubernetes.io/instance: solr
+    app.kubernetes.io/instance: release-name
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: solr
     app.kubernetes.io/version: 9.8.0
@@ -18,26 +18,26 @@ spec:
   revisionHistoryLimit: 10
   selector:
     matchLabels:
-      app.kubernetes.io/instance: solr
+      app.kubernetes.io/instance: release-name
       app.kubernetes.io/name: solr
       app.kubernetes.io/component: solr
-  serviceName: solr-headless
+  serviceName: release-name-solr-headless
   updateStrategy:
     rollingUpdate: {}
     type: RollingUpdate
   template:
     metadata:
       annotations:
-        checksum/secrets: CHECKSUM
+        checksum/secrets: b55cc2ff4bffab49c3eab876c7f535cf66b94909bb47a299838949b8d616b0e2
       labels:
-        app.kubernetes.io/instance: solr
+        app.kubernetes.io/instance: release-name
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: solr
         app.kubernetes.io/version: 9.8.0
         helm.sh/chart: solr-9.5.3
         app.kubernetes.io/component: solr
     spec:
-      serviceAccountName: solr
+      serviceAccountName: release-name-solr
       
       automountServiceAccountToken: false
       affinity:
@@ -48,7 +48,7 @@ spec:
             - podAffinityTerm:
                 labelSelector:
                   matchLabels:
-                    app.kubernetes.io/instance: solr
+                    app.kubernetes.io/instance: release-name
                     app.kubernetes.io/name: solr
                     app.kubernetes.io/component: solr
                 topologyKey: kubernetes.io/hostname
@@ -152,10 +152,10 @@ spec:
             - name: SOLR_ADMIN_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: solr
+                  name: release-name-solr
                   key: solr-password
             - name: SOLR_ZK_HOSTS
-              value: "solr-zookeeper-0.solr-zookeeper-headless.default.svc.cluster.local:2181,solr-zookeeper-1.solr-zookeeper-headless.default.svc.cluster.local:2181,solr-zookeeper-2.solr-zookeeper-headless.default.svc.cluster.local:2181"
+              value: "release-name-zookeeper-0.release-name-zookeeper-headless.default.svc.cluster.local:2181,release-name-zookeeper-1.release-name-zookeeper-headless.default.svc.cluster.local:2181,release-name-zookeeper-2.release-name-zookeeper-headless.default.svc.cluster.local:2181"
           ports:
             - name: http
               containerPort: 8983
@@ -215,7 +215,7 @@ spec:
           emptyDir: {}
         - name: scripts
           configMap:
-            name: solr-scripts
+            name: release-name-solr-scripts
             defaultMode: 0755
   volumeClaimTemplates:
     - apiVersion: v1

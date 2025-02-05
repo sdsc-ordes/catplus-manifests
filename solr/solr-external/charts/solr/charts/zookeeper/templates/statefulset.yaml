@@ -1,12 +1,12 @@
 ---
-# Source: solr/charts/zookeeper/templates/statefulset.yaml
+# Source: solr-external/charts/solr/charts/zookeeper/templates/statefulset.yaml
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: solr-zookeeper
+  name: release-name-zookeeper
   namespace: default
   labels:
-    app.kubernetes.io/instance: solr
+    app.kubernetes.io/instance: release-name
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: zookeeper
     app.kubernetes.io/version: 3.9.3
@@ -19,10 +19,10 @@ spec:
   podManagementPolicy: Parallel
   selector:
     matchLabels:
-      app.kubernetes.io/instance: solr
+      app.kubernetes.io/instance: release-name
       app.kubernetes.io/name: zookeeper
       app.kubernetes.io/component: zookeeper
-  serviceName: solr-zookeeper-headless
+  serviceName: release-name-zookeeper-headless
   updateStrategy:
     rollingUpdate: {}
     type: RollingUpdate
@@ -30,7 +30,7 @@ spec:
     metadata:
       annotations:
       labels:
-        app.kubernetes.io/instance: solr
+        app.kubernetes.io/instance: release-name
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: zookeeper
         app.kubernetes.io/version: 3.9.3
@@ -38,7 +38,7 @@ spec:
         app.kubernetes.io/component: zookeeper
     spec:
       enableServiceLinks: true
-      serviceAccountName: solr-zookeeper
+      serviceAccountName: release-name-zookeeper
       
       automountServiceAccountToken: false
       affinity:
@@ -49,7 +49,7 @@ spec:
             - podAffinityTerm:
                 labelSelector:
                   matchLabels:
-                    app.kubernetes.io/instance: solr
+                    app.kubernetes.io/instance: release-name
                     app.kubernetes.io/name: zookeeper
                     app.kubernetes.io/component: zookeeper
                 topologyKey: kubernetes.io/hostname
@@ -120,7 +120,7 @@ spec:
             - name: ZOO_MAX_SESSION_TIMEOUT
               value: "40000"
             - name: ZOO_SERVERS
-              value: solr-zookeeper-0.solr-zookeeper-headless.default.svc.cluster.local:2888:3888::1 solr-zookeeper-1.solr-zookeeper-headless.default.svc.cluster.local:2888:3888::2 solr-zookeeper-2.solr-zookeeper-headless.default.svc.cluster.local:2888:3888::3 
+              value: release-name-zookeeper-0.release-name-zookeeper-headless.default.svc.cluster.local:2888:3888::1 release-name-zookeeper-1.release-name-zookeeper-headless.default.svc.cluster.local:2888:3888::2 release-name-zookeeper-2.release-name-zookeeper-headless.default.svc.cluster.local:2888:3888::3 
             - name: ZOO_ENABLE_AUTH
               value: "no"
             - name: ZOO_ENABLE_QUORUM_AUTH
@@ -189,7 +189,7 @@ spec:
           emptyDir: {}
         - name: scripts
           configMap:
-            name: solr-zookeeper-scripts
+            name: release-name-zookeeper-scripts
             defaultMode: 493
   volumeClaimTemplates:
     - apiVersion: v1

@@ -1,12 +1,12 @@
 ---
-# Source: solr/templates/pdb.yaml
+# Source: solr-external/charts/solr/templates/pdb.yaml
 apiVersion: policy/v1
 kind: PodDisruptionBudget
 metadata:
-  name: solr
+  name: release-name-solr
   namespace: "default"
   labels:
-    app.kubernetes.io/instance: solr
+    app.kubernetes.io/instance: release-name
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: solr
     app.kubernetes.io/version: 9.8.0
@@ -15,6 +15,6 @@ spec:
   maxUnavailable: 1
   selector:
     matchLabels:
-      app.kubernetes.io/instance: solr
+      app.kubernetes.io/instance: release-name
       app.kubernetes.io/name: solr
       app.kubernetes.io/component: solr

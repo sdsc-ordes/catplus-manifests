@@ -1,12 +1,12 @@
 ---
-# Source: solr/templates/networkpolicy.yaml
+# Source: solr-external/charts/solr/templates/networkpolicy.yaml
 kind: NetworkPolicy
 apiVersion: networking.k8s.io/v1
 metadata:
-  name: solr
+  name: release-name-solr
   namespace: "default"
   labels:
-    app.kubernetes.io/instance: solr
+    app.kubernetes.io/instance: release-name
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: solr
     app.kubernetes.io/version: 9.8.0
@@ -14,7 +14,7 @@ metadata:
 spec:
   podSelector:
     matchLabels:
-      app.kubernetes.io/instance: solr
+      app.kubernetes.io/instance: release-name
       app.kubernetes.io/name: solr
   policyTypes:
     - Ingress
