@@ -1,5 +1,12 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources: 
-  - "solr-template.yaml"
+  - "solr/templates/svc.yaml"
+  - "solr/templates/networkpolicy.yaml"
+  - "solr/templates/pdb.yaml"
+  - "solr/templates/scripts-configmap.yaml"
+  - "solr/templates/service-account.yaml"
+  - "solr/templates/statefulset.yaml"
+# note: we need to specify PVC 
+# need to move secrets to secrets folder  
 namespace: solr
