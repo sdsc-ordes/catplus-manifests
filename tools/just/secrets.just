@@ -20,35 +20,40 @@ alias keygen := generate-key
 # Create key file to use with sops.
 generate-key:
   @echo "Generating key..."
-  @cd "{{root_dir}}" && \
+  @cd {{root_dir}} && \
   age-keygen -o {{SOPS_AGE_KEY_FILE}}
 
 # Update key configs based on .sops.yaml.
 update-keys:
   @echo "Updating keys in secret files"
-  @cd "{{root_dir}}" && \
-  sops updatekeys {{SECRETS_ENC}}
+  @cd {{root_dir}} && \
+  @fd {{ENC_SUFFIX}} {{SECRETS_DIR}} --exec "sops updatekeys {}"
 
 # see here for usage of sops+age: https://github.com/getsops/sops?tab=readme-ov-file#encrypting-using-age
-# create decrypted secrets file.
+# Decrypts all secrets files.
 decrypt:
   @echo "Decrypting secrets..."
-  @cd "{{root_dir}}" && \
-    sops --age $(grep -oP 'public key: \K(.*)' {{SOPS_AGE_KEY_FILE}}) \
-      -d "{{SECRETS_ENC}}" \
-      > "{{SECRETS_DEC}}"
+  @cd {{root_dir}} && \
+    for enc in {{SECRETS_DIR}}/*{{ENC_SUFFIX}}; do \
+      sops --age $(grep -oP 'public key: \K(.*)' {{SOPS_AGE_KEY_FILE}}) \
+        -d ${enc} \
+        > ${enc%{{ENC_SUFFIX}}}{{DEC_SUFFIX}}; \
+    done
 
 # Create encrypted secrets file.
 encrypt:
   @echo "Encrypting secrets..."
-  @cd "{{root_dir}}" && \
-    sops -e "{{SECRETS_DEC}}" \
-      > "{{SECRETS_ENC}}" && \
-    rm {{SECRETS_DEC}}
+  @cd {{root_dir}} && \
+    for dec in {{SECRETS_DIR}}/*{{DEC_SUFFIX}}; do \
+      sops -e ${dec} > ${dec%{{DEC_SUFFIX}}}{{ENC_SUFFIX}} && \
+      rm ${dec}; \
+    done
 
 alias apply := deploy
 # Deploy decrypted secrets to cluster.
 deploy:
   @cd "{{root_dir}}" && \
-    sops exec-file {{SECRETS_ENC}} 'kubectl apply -f {}'
+  for enc in {{SECRETS_DIR}}/*{{ENC_SUFFIX}}; do \
+    sops exec-file ${enc} 'kubectl apply -f {}'; \
+  done
 
