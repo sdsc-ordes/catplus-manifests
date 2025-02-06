@@ -1,5 +1,7 @@
-SECRETS_ENC := "./secrets/secrets.enc.yaml"
-SECRETS_DEC := "./secrets/secrets.dec.yaml"
+# We assume all encrypted secrets follow the naming pattern {{SECRET_DIR}}/*{{ENC_SUFFIX}}
+SECRETS_DIR := "./secrets"
+ENC_SUFFIX := ".enc.yaml"
+DEC_SUFFIX := ".dec.yaml"
 root_dir := `git rev-parse --show-toplevel`
 export SOPS_AGE_KEY_FILE := "./.sops.agekey"
 set shell := ["bash", "-cue"]
@@ -8,6 +10,11 @@ set shell := ["bash", "-cue"]
 [private]
 default:
     just --list secrets --no-aliases
+
+# Edit an encrypted secrets file in place
+edit secret_file:
+  @cd {{root_dir}} && \
+    sops {{secret_file}}
 
 alias keygen := generate-key
 # Create key file to use with sops.
