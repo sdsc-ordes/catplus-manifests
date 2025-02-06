@@ -40,7 +40,7 @@ decrypt:
         > ${enc%{{ENC_SUFFIX}}}{{DEC_SUFFIX}}; \
     done
 
-# Create encrypted secrets file.
+# Encrypts all secrets file.
 encrypt:
   @echo "Encrypting secrets..."
   @cd {{root_dir}} && \
