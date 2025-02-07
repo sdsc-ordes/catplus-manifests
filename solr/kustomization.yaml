@@ -3,18 +3,9 @@ kind: Kustomization
 # need to move secrets to secrets folder  
 namespace: solr
 resources:
-  - solr-external/charts/solr/charts/zookeeper/templates/networkpolicy.yaml
-  - solr-external/charts/solr/charts/zookeeper/templates/pdb.yaml
-  - solr-external/charts/solr/charts/zookeeper/templates/scripts-configmap.yaml
-  - solr-external/charts/solr/charts/zookeeper/templates/serviceaccount.yaml
-  - solr-external/charts/solr/charts/zookeeper/templates/statefulset.yaml
-  - solr-external/charts/solr/charts/zookeeper/templates/svc-headless.yaml
-  - solr-external/charts/solr/charts/zookeeper/templates/svc.yaml
   - solr-external/charts/solr/templates/networkpolicy.yaml
   - solr-external/charts/solr/templates/pdb.yaml
   - solr-external/charts/solr/templates/scripts-configmap.yaml
-  - solr-external/charts/solr/templates/secrets.yaml
   - solr-external/charts/solr/templates/service-account.yaml
   - solr-external/charts/solr/templates/statefulset.yaml
-  - solr-external/charts/solr/templates/svc-headless.yaml
   - solr-external/charts/solr/templates/svc.yaml
