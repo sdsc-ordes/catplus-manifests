@@ -15,11 +15,11 @@ format *args:
     @cd "{{root_dir}}" && \
     yamlfmt **/*.y{a,}ml
 
-
+# Render helm templates
 render dir=".":
     @cd "{{root_dir}}" && \
     helm dependency build {{dir}}/helm-chart
-    helm template {{dir}}/helm-chart --output-dir {{dir}}
+    helm template {{dir}}-catplus {{dir}}/helm-chart --output-dir {{dir}}
 
 alias apply := deploy
 # Apply manifests to the cluster.
