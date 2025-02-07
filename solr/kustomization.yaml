@@ -3,6 +3,7 @@ kind: Kustomization
 # need to move secrets to secrets folder  
 namespace: solr
 resources:
+  - namespaces.yaml
   - solr-external/charts/solr/templates/networkpolicy.yaml
   - solr-external/charts/solr/templates/pdb.yaml
   - solr-external/charts/solr/templates/scripts-configmap.yaml

@@ -10,6 +10,7 @@ solr:
   cloudEnabled: false
   cloudBootstrap: false
   replicaCount: 1
+  collectionReplicas: 1
   revisionHistoryLimit: 3
   resources:
     requests:

@@ -141,7 +141,7 @@ spec:
             - name: SOLR_COLLECTION_SHARDS
               value: "1"
             - name: SOLR_COLLECTION_REPLICAS
-              value: "2"
+              value: "1"
             - name: SOLR_ENABLE_AUTHENTICATION
               value: "no"
             - name: SOLR_ZK_HOSTS
