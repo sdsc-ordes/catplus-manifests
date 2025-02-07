@@ -3,10 +3,10 @@
 apiVersion: policy/v1
 kind: PodDisruptionBudget
 metadata:
-  name: release-name-solr
+  name: solr-catplus
   namespace: "default"
   labels:
-    app.kubernetes.io/instance: release-name
+    app.kubernetes.io/instance: solr-catplus
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: solr
     app.kubernetes.io/version: 9.8.0
@@ -15,6 +15,6 @@ spec:
   maxUnavailable: 1
   selector:
     matchLabels:
-      app.kubernetes.io/instance: release-name
+      app.kubernetes.io/instance: solr-catplus
       app.kubernetes.io/name: solr
       app.kubernetes.io/component: solr

@@ -3,10 +3,10 @@
 apiVersion: policy/v1
 kind: PodDisruptionBudget
 metadata:
-  name: release-name-zookeeper
+  name: solr-catplus-zookeeper
   namespace: default
   labels:
-    app.kubernetes.io/instance: release-name
+    app.kubernetes.io/instance: solr-catplus
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: zookeeper
     app.kubernetes.io/version: 3.9.3
@@ -16,6 +16,6 @@ spec:
   maxUnavailable: 1
   selector:
     matchLabels:
-      app.kubernetes.io/instance: release-name
+      app.kubernetes.io/instance: solr-catplus
       app.kubernetes.io/name: zookeeper
       app.kubernetes.io/component: zookeeper

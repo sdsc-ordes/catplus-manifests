@@ -3,9 +3,9 @@
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: release-name-solr
+  name: solr-catplus
   labels:
-    app.kubernetes.io/instance: release-name
+    app.kubernetes.io/instance: solr-catplus
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: solr
     app.kubernetes.io/version: 9.8.0
@@ -14,30 +14,29 @@ metadata:
   namespace: "default"
 spec:
   podManagementPolicy: Parallel
-  replicas: 3
-  revisionHistoryLimit: 10
+  replicas: 1
+  revisionHistoryLimit: 3
   selector:
     matchLabels:
-      app.kubernetes.io/instance: release-name
+      app.kubernetes.io/instance: solr-catplus
       app.kubernetes.io/name: solr
       app.kubernetes.io/component: solr
-  serviceName: release-name-solr-headless
+  serviceName: solr-catplus-headless
   updateStrategy:
     rollingUpdate: {}
     type: RollingUpdate
   template:
     metadata:
       annotations:
-        checksum/secrets: b55cc2ff4bffab49c3eab876c7f535cf66b94909bb47a299838949b8d616b0e2
       labels:
-        app.kubernetes.io/instance: release-name
+        app.kubernetes.io/instance: solr-catplus
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: solr
         app.kubernetes.io/version: 9.8.0
         helm.sh/chart: solr-9.5.3
         app.kubernetes.io/component: solr
     spec:
-      serviceAccountName: release-name-solr
+      serviceAccountName: solr-catplus
       
       automountServiceAccountToken: false
       affinity:
@@ -48,7 +47,7 @@ spec:
             - podAffinityTerm:
                 labelSelector:
                   matchLabels:
-                    app.kubernetes.io/instance: release-name
+                    app.kubernetes.io/instance: solr-catplus
                     app.kubernetes.io/name: solr
                     app.kubernetes.io/component: solr
                 topologyKey: kubernetes.io/hostname
@@ -67,13 +66,11 @@ spec:
           imagePullPolicy: "IfNotPresent"
           resources:
             limits:
-              cpu: 750m
-              ephemeral-storage: 2Gi
-              memory: 1536Mi
+              cpu: 3
+              memory: 2048Mi
             requests:
-              cpu: 500m
-              ephemeral-storage: 50Mi
-              memory: 1024Mi
+              cpu: 2
+              memory: 512Mi
           securityContext:
             allowPrivilegeEscalation: false
             capabilities:
@@ -132,42 +129,33 @@ spec:
                 fieldRef:
                   fieldPath: metadata.name
             - name: SOLR_ENABLE_CLOUD_MODE
-              value: "yes"
+              value: "no"
             - name: SOLR_NUMBER_OF_NODES
-              value: "3"
+              value: "1"
             - name: SOLR_PORT_NUMBER
               value: "8983"
             - name: SOLR_SERVER_DIRECTORY
               value: "server"
-            - name: SOLR_COLLECTION
-              value: "my-collection"
+            - name: SOLR_CORES
+              value: "my-core"
             - name: SOLR_COLLECTION_SHARDS
               value: "1"
             - name: SOLR_COLLECTION_REPLICAS
               value: "2"
             - name: SOLR_ENABLE_AUTHENTICATION
-              value: "yes"
-            - name: SOLR_ADMIN_USERNAME
-              value: "admin"
-            - name: SOLR_ADMIN_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: release-name-solr
-                  key: solr-password
+              value: "no"
             - name: SOLR_ZK_HOSTS
-              value: "release-name-zookeeper-0.release-name-zookeeper-headless.default.svc.cluster.local:2181,release-name-zookeeper-1.release-name-zookeeper-headless.default.svc.cluster.local:2181,release-name-zookeeper-2.release-name-zookeeper-headless.default.svc.cluster.local:2181"
+              value: "solr-catplus-zookeeper-0.solr-catplus-zookeeper-headless.default.svc.cluster.local:2181,solr-catplus-zookeeper-1.solr-catplus-zookeeper-headless.default.svc.cluster.local:2181,solr-catplus-zookeeper-2.solr-catplus-zookeeper-headless.default.svc.cluster.local:2181"
           ports:
             - name: http
               containerPort: 8983
           resources:
             limits:
-              cpu: 750m
-              ephemeral-storage: 2Gi
-              memory: 1536Mi
+              cpu: 3
+              memory: 2048Mi
             requests:
-              cpu: 500m
-              ephemeral-storage: 50Mi
-              memory: 1024Mi
+              cpu: 2
+              memory: 512Mi
           livenessProbe:
             failureThreshold: 6
             initialDelaySeconds: 40
@@ -179,7 +167,7 @@ spec:
               - /bin/bash
               - -ec
               - |
-                curl --silent --connect-timeout 15000 --user ${SOLR_ADMIN_USERNAME}:${SOLR_ADMIN_PASSWORD} http://localhost:${SOLR_PORT_NUMBER}/solr/admin/info/system | grep --quiet  '\"status\":0'
+                curl --silent --connect-timeout 15000  http://localhost:${SOLR_PORT_NUMBER}/solr/admin/info/system | grep --quiet  '\"status\":0'
           readinessProbe:
             failureThreshold: 6
             initialDelaySeconds: 60
@@ -191,7 +179,7 @@ spec:
               - /bin/bash
               - -ec
               - |
-                curl --silent --connect-timeout 15000 --user ${SOLR_ADMIN_USERNAME}:${SOLR_ADMIN_PASSWORD} http://localhost:${SOLR_PORT_NUMBER}/api/node/health | grep --quiet  '\"status\":\"OK\"'
+                curl --silent --connect-timeout 15000  http://localhost:${SOLR_PORT_NUMBER}/api/node/health | grep --quiet  '\"status\":\"OK\"'
           volumeMounts:
             - name: empty-dir
               mountPath: /tmp
@@ -215,7 +203,7 @@ spec:
           emptyDir: {}
         - name: scripts
           configMap:
-            name: release-name-solr-scripts
+            name: solr-catplus-scripts
             defaultMode: 0755
   volumeClaimTemplates:
     - apiVersion: v1
@@ -228,4 +216,4 @@ spec:
           - "ReadWriteOnce"
         resources:
           requests:
-            storage: "8Gi"
+            storage: "20Gi"

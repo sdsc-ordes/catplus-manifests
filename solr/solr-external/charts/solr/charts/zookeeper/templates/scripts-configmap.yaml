@@ -3,10 +3,10 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: release-name-zookeeper-scripts
+  name: solr-catplus-zookeeper-scripts
   namespace: default
   labels:
-    app.kubernetes.io/instance: release-name
+    app.kubernetes.io/instance: solr-catplus
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: zookeeper
     app.kubernetes.io/version: 3.9.3
