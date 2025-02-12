@@ -7,7 +7,7 @@ appVersion: "0.1.0"
 
 dependencies:
   - name: "qlever"
-    version: "0.5.6"
-    repository: "https://artifacthub.io/packages/helm/zazuko/qlever"
+    version: "0.2.3"
+    repository: "https://charts.zazuko.com"
     alias: "qlever"
     condition: qlever.enabled

@@ -1,0 +1,9 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+- ./namespaces.yaml
+- qlever-external/charts/qlever/templates/deployment-server.yaml
+- qlever-external/charts/qlever/templates/deployment-ui.yaml
+- qlever-external/charts/qlever/templates/service-server.yaml
+- qlever-external/charts/qlever/templates/service-ui.yaml
+namespace: qlever
