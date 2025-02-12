@@ -1,0 +1,13 @@
+apiVersion: v2
+name: qlever-external
+description: A Helm chart for qlever
+type: application
+version: 0.1.0
+appVersion: "0.1.0"
+
+dependencies:
+  - name: "qlever"
+    version: "0.5.6"
+    repository: "https://artifacthub.io/packages/helm/zazuko/qlever"
+    alias: "qlever"
+    condition: qlever.enabled
