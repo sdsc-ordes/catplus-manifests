@@ -18,7 +18,7 @@ format *args:
 # Render helm templates
 render dir=".":
     @cd "{{root_dir}}" && \
-    helm dependency build manifests/{{dir}}/helm-chart
+    helm dependency update manifests/{{dir}}/helm-chart
     helm template {{dir}}-catplus manifests/{{dir}}/helm-chart --output-dir manifests/{{dir}}
 
 alias apply := deploy
