@@ -1,0 +1,13 @@
+qlever:
+  config:
+    data:
+      name: "olympics"
+      base_url: https://github.com/wallscope/olympics-rdf
+      get_data_cmd: |
+        curl -sLo olympics.zip -C - \
+          https://github.com/wallscope/olympics-rdf/raw/master/data/olympics-nt-nodup.zip && \
+        unzip -q -o olympics.zip && \
+        rm olympics.zip
+
+    ui:
+      ui_config: "olympics"

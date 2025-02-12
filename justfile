@@ -15,12 +15,17 @@ format *args:
     @cd "{{root_dir}}" && \
     yamlfmt **/*.y{a,}ml
 
+# Render helm templates
+render dir=".":
+    @cd "{{root_dir}}" && \
+    helm dependency update manifests/{{dir}}/helm-chart
+    helm template {{dir}}-catplus manifests/{{dir}}/helm-chart --output-dir manifests/{{dir}}
 
 alias apply := deploy
 # Apply manifests to the cluster.
-deploy *args:
+deploy dir=".":
     @cd "{{root_dir}}" && \
-    kubectl apply --kustomize .
+    kubectl apply --kustomize manifests/{{dir}}
 
 alias dev := nix-develop
 # Enter a Nix development shell.
@@ -33,4 +38,3 @@ nix-develop *args:
 
 # Manage secrets. Run `just secrets` for more info
 mod secrets 'tools/just/secrets.just'
-
