@@ -137,7 +137,7 @@ spec:
             - name: SOLR_SERVER_DIRECTORY
               value: "server"
             - name: SOLR_CORES
-              value: "my-core"
+              value: "cat-plus"
             - name: SOLR_COLLECTION_SHARDS
               value: "1"
             - name: SOLR_COLLECTION_REPLICAS
