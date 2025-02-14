@@ -6,7 +6,7 @@ solr:
     existingSecret: ""
     existingSecretPasswordKey: "solr-password"
   coreNames:
-    - cat-plus
+    - catplus
   cloudEnabled: false
   cloudBootstrap: false
   replicaCount: 1
