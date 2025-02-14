@@ -1,5 +1,5 @@
 # We assume all encrypted secrets follow the naming pattern {{SECRET_DIR}}/*{{ENC_SUFFIX}}
-SECRETS_DIR := "./secrets"
+SECRETS_DIR := "./manifests/secrets"
 ENC_SUFFIX := ".enc.yaml"
 DEC_SUFFIX := ".dec.yaml"
 root_dir := `git rev-parse --show-toplevel`
@@ -56,4 +56,3 @@ deploy:
   for enc in {{SECRETS_DIR}}/*{{ENC_SUFFIX}}; do \
     sops exec-file ${enc} 'kubectl apply -f {}'; \
   done
-

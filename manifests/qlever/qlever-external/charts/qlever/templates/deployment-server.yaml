@@ -1,0 +1,84 @@
+---
+# Source: qlever-external/charts/qlever/templates/deployment-server.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: qlever-catplus-server
+  labels:
+    app.kubernetes.io/component: server
+    helm.sh/chart: qlever-0.2.3
+    app.kubernetes.io/name: qlever
+    app.kubernetes.io/instance: qlever-catplus
+    app.kubernetes.io/version: "v0.5.5"
+    app.kubernetes.io/managed-by: Helm
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/component: server
+      app.kubernetes.io/name: qlever
+      app.kubernetes.io/instance: qlever-catplus
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/component: server
+        helm.sh/chart: qlever-0.2.3
+        app.kubernetes.io/name: qlever
+        app.kubernetes.io/instance: qlever-catplus
+        app.kubernetes.io/version: "v0.5.5"
+        app.kubernetes.io/managed-by: Helm
+    spec:
+      serviceAccountName: default
+      securityContext:
+        fsGroup: 0
+        runAsGroup: 0
+        runAsNonRoot: true
+        runAsUser: 65534
+      containers:
+        - name: qlever-server
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities: {}
+            privileged: false
+            readOnlyRootFilesystem: false
+            runAsNonRoot: true
+            runAsUser: 65534
+            seLinuxOptions: {}
+          image: "ghcr.io/zazukoians/qlever-server:v0.5.5"
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 7001
+              protocol: TCP
+          env:
+            - name: QLEVER_DATA_NAME
+              value: "default"
+            - name: QLEVER_INDEX_SETTINGS_JSON
+              value: "{\"ascii-prefixes-only\":false,\"num-triples-per-batch\":100000}"
+            - name: QLEVER_RUNTIME_SYSTEM
+              value: "native"
+            - name: QLEVER_SERVER_ACCESS_TOKEN
+              value: "default_random_access_token"
+            - name: QLEVER_SERVER_CACHE_MAX_SIZE
+              value: "2G"
+            - name: QLEVER_SERVER_ENDPOINT
+              value: "http://127.0.0.1:7001"
+            - name: QLEVER_SERVER_HOST_NAME
+              value: "127.0.0.1"
+            - name: QLEVER_SERVER_MEMORY_FOR_QUERIES
+              value: "5G"
+            - name: QLEVER_SERVER_PORT
+              value: "7001"
+            - name: QLEVER_SERVER_TIMEOUT
+              value: "30s"
+            - name: QLEVER_UI_UI_CONFIG
+              value: "default"
+            - name: QLEVER_UI_UI_PORT
+              value: "7002"
+          livenessProbe:
+            tcpSocket:
+              port: http
+          readinessProbe:
+            tcpSocket:
+              port: http
+          resources:
+            {}
