@@ -4,13 +4,39 @@ metadata:
   name: s3-qlever-workflow
 spec:
   schedule: "* * * * *"
-  concurrencyPolicy: "Replace"
-  startingDeadlineSeconds: 0
-  workflowSpec:
-    entrypoint: date
-    templates:
-    - name: date
-      container:
-        image: alpine:3.6
-        command: [sh, -c]
-        args: ["date; sleep 90"]
+  entrypoint: artifact-example
+  templates:
+  - name: artifact-example
+    steps:
+    - - name: retrieve-s3
+        template: s3-retriever
+    - - name: post-qlever
+        template: http
+  # Test: add file to artifact-repository bucket. 
+  # use this workflow to list it. 
+  # Then replace artifact bucket with another input bucket
+  # Then test with http
+  - name: s3-retriever
+    container:
+        image: argoproj/argosay:v2
+        args: [cat, /tmp/file]
+    inputs:
+      artifacts:
+        - name: file
+          path: /tmp/file
+          s3:
+            key: my-file
+
+  # - name: http
+  #   inputs:
+  #     parameters:
+  #       - name: url
+  #   http:
+  #     timeoutSeconds: 20 # Default 30
+  #     url: "{{inputs.parameters.url}}"
+  #     method: "GET" # Default GET
+  #     headers:
+  #       - name: "x-header-name"
+  #         value: "test-value"
+  #     successCondition: "response.body contains \"google\"" # available since v3.3
+  #     body: "test body" # Change request body
