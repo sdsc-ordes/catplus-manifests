@@ -50,8 +50,16 @@ spec:
               containerPort: 7002
               protocol: TCP
           env:
+            - name: QLEVER_DATA_BASE_URL
+              value: "https://github.com/sdsc-ordes/cat-plus-ontology"
+            - name: QLEVER_DATA_GET_DATA_CMD
+              value: "curl -sLo catplus-ontology.nt -C - https://github.com/sdsc-ordes/cat-plus-ontology/releases/download/v0.1.0/catplus-ontology.nt"
             - name: QLEVER_DATA_NAME
-              value: "default"
+              value: "olympics"
+            - name: QLEVER_INDEX_CAT_INPUT_FILES
+              value: "cat catplus-ontology.nt"
+            - name: QLEVER_INDEX_INPUT_FILES
+              value: "catplus-ontology.nt"
             - name: QLEVER_INDEX_SETTINGS_JSON
               value: "{\"ascii-prefixes-only\":false,\"num-triples-per-batch\":100000}"
             - name: QLEVER_RUNTIME_SYSTEM
@@ -71,7 +79,7 @@ spec:
             - name: QLEVER_SERVER_TIMEOUT
               value: "30s"
             - name: QLEVER_UI_UI_CONFIG
-              value: "default"
+              value: "olympics"
             - name: QLEVER_UI_UI_PORT
               value: "7002"
           livenessProbe:
@@ -84,3 +92,10 @@ spec:
               port: http
           resources:
             {}
+          volumeMounts:
+            - mountPath: /data
+              name: data
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: qlever-data-pvc
