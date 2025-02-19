@@ -19,7 +19,7 @@ format *args:
 render dir=".":
     @cd "{{root_dir}}" && \
     helm dependency update {{dir}}/helm-chart
-    helm template {{dir}}-catplus manifests/{{dir}}/helm-chart --output-dir {{dir}}
+    helm template {{dir}}-catplus {{dir}}/helm-chart --output-dir {{dir}}
 
 alias apply := deploy
 # Apply manifests to the cluster.
