@@ -1,5 +1,5 @@
 # We assume all encrypted secrets follow the naming pattern {{SECRET_DIR}}/*{{ENC_SUFFIX}}
-SECRETS_DIR := "./manifests/secrets"
+SECRETS_DIR := "./manifests/infra/secrets"
 ENC_SUFFIX := ".enc.yaml"
 DEC_SUFFIX := ".dec.yaml"
 root_dir := `git rev-parse --show-toplevel`
