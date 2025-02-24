@@ -1,0 +1,5 @@
+apiVersion: v2
+name: shacl-api-external
+description: A Helm chart for sdsc-ordes/shacl-api
+type: application
+version: 0.1.0
