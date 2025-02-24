@@ -4,6 +4,8 @@ resources:
   - ./namespaces.yaml
   - "https://github.com/argoproj/argo-workflows/manifests/cluster-install?ref=v3.6.2"
   - ./service-account-token.yaml
+  - ./artifact-repository-configmap.yaml
+  - ./s3-qlever-workflow.yaml
 patches:
 - path: patch-add-role-ns.yaml
   target:

@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: artifact-repositories
+  annotations:
+    workflows.argoproj.io/default-artifact-repository: s3-artifact-repository
+data:
+  s3-artifact-repository: |
+    s3: 
+      bucket: argo-artifact-repository
+      endpoint: s3-a.zhw.cloud.switch.ch
+      insecure: true
+      accessKeySecret:
+        name: artifacts-s3
+        key: accesskey
+      secretKeySecret:
+        name: artifacts-s3
+        key: secretkey

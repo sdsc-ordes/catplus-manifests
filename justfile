@@ -18,14 +18,14 @@ format *args:
 # Render helm templates
 render dir=".":
     @cd "{{root_dir}}" && \
-    helm dependency update manifests/{{dir}}/helm-chart
-    helm template {{dir}}-catplus manifests/{{dir}}/helm-chart --output-dir manifests/{{dir}}
+    helm dependency update {{dir}}/helm-chart
+    helm template {{dir}}-catplus {{dir}}/helm-chart --output-dir {{dir}}
 
 alias apply := deploy
 # Apply manifests to the cluster.
 deploy dir=".":
     @cd "{{root_dir}}" && \
-    kubectl apply --kustomize manifests/{{dir}}
+    kubectl apply --kustomize {{dir}}
 
 alias dev := nix-develop
 # Enter a Nix development shell.
