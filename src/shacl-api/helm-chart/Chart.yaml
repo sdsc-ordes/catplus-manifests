@@ -3,3 +3,10 @@ name: shacl-api-external
 description: A Helm chart for sdsc-ordes/shacl-api
 type: application
 version: 0.1.0
+appVersion: "0.1.0"
+dependencies:
+  - name: "shacl-api"
+    version: "0.0.1"
+    repository: "https://sdsc-ordes.github.io/shacl-api"
+    alias: "shacl-api"
+    condition: shacl.enabled
