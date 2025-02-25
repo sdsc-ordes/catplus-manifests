@@ -1,0 +1,30 @@
+---
+# Source: shacl-api-external/charts/shacl-api/templates/shacl-api-deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: shacl-api-dep
+  labels:
+    app.kubernetes.io/name: shacl-api
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+        name: shacl-api
+    spec:
+      selector:
+        matchLabels:
+          app.kubernetes.io/name: shacl-api
+      containers:
+        - image: ghcr.io/sdsc-ordes/shacl-api:latest
+          name: shacl-api
+          ports:
+            - containerPort: 15400
+          env:
+            - name: SHAPES_PATH
+              value: /shacl/data/shapes.ttl
+            - name: SHAPES_URL
+              value: https://github.com/sdsc-ordes/imaging-plaza-ontology/releases/download/v0.8/ImagingOntologyCombined.ttl.gz
+      restartPolicy: Always
