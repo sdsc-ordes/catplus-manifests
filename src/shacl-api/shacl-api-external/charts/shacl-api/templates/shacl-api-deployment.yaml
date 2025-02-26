@@ -26,5 +26,5 @@ spec:
             - name: SHAPES_PATH
               value: /shacl/data/shapes.ttl
             - name: SHAPES_URL
-              value: https://github.com/sdsc-ordes/imaging-plaza-ontology/releases/download/v0.8/ImagingOntologyCombined.ttl.gz
+              value: https://github.com/sdsc-ordes/catplus-ontology/releases/download/v0.1.0/catplus_ontology.ttl
       restartPolicy: Always
