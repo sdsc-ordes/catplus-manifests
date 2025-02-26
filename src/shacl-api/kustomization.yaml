@@ -1,0 +1,7 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+- ./namespaces.yaml
+- shacl-api-external/charts/shacl-api/templates/shacl-api-deployment.yaml
+- shacl-api-external/charts/shacl-api/templates/shacl_api-service.yaml
+namespace: shacl
