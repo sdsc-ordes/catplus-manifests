@@ -8,8 +8,8 @@ data:
   s3-artifact-repository: |
     s3: 
       bucket: argo-artifact-repository
-      endpoint: https://s3-a.zhw.cloud.switch.ch
-      insecure: true
+      endpoint: s3-a.zhw.cloud.switch.ch
+      insecure: false
       accessKeySecret:
         name: artifacts-s3
         key: accesskey
