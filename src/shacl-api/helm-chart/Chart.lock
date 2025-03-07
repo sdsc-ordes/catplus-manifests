@@ -1,6 +1,0 @@
-dependencies:
-- name: shacl-api
-  repository: https://sdsc-ordes.github.io/shacl-api
-  version: 0.0.1
-digest: sha256:bf5f68a1739b0ecc559e09472af2649dcb2bf59874a944156a5b1192abf5fca8
-generated: "2025-02-25T16:04:18.990573911+01:00"

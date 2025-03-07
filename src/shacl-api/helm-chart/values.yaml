@@ -1,3 +1,0 @@
-shacl-api:
-  config: 
-    SHAPES_URL: 'https://github.com/sdsc-ordes/catplus-ontology/releases/download/v0.1.0/catplus_ontology.ttl'
