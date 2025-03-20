@@ -1,4 +1,3 @@
----
 # Source: qlever-external/charts/qlever/templates/deployment-ui.yaml
 apiVersion: apps/v1
 kind: Deployment
@@ -90,8 +89,7 @@ spec:
             httpGet:
               path: /
               port: http
-          resources:
-            {}
+          resources: {}
           volumeMounts:
             - mountPath: /data
               name: data
