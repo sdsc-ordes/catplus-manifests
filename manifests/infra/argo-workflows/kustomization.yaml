@@ -6,7 +6,6 @@ resources:
   - ./service-account-token.yaml
   - ./artifact-repository-configmap.yaml
   - ./s3-qlever-workflow.yaml
-  - ./debug-wf.yaml
 patches:
 - path: patch-list-namespaces.yaml
   target:
