@@ -10,10 +10,9 @@ default:
     just --list --no-aliases
 
 alias fmt := format
-# Format manifests.
+# Format the whole repository.
 format *args:
-    @cd "{{root_dir}}" && \
-    yamlfmt **/*.y{a,}ml
+    treefmt {{args}}
 
 # Render helm templates
 render dir=".":
