@@ -1,5 +1,8 @@
 set positional-arguments
 set shell := ["bash", "-cue"]
+build_dir := root_dir + "/build"
+pre_dir := build_dir + "/pre"
+out_dir := build_dir + "/manifests"
 
 root_dir := `git rev-parse --show-toplevel`
 
@@ -14,15 +17,32 @@ alias fmt := format
 format *args:
     treefmt {{args}}
 
+clean *args:
+    @echo "Cleaning up..."
+    rm -rf src/**/{ytt,helm}/out
+
 # Fetch manifest dependencies
 fetch:
   vendir sync -f vendir.yaml --chdir external
 
-# Render helm templates
-render dir=".": fetch
-    @cd "{{root_dir}}" && \
-    helm dependency update {{dir}}/helm-chart
-    helm template $(basename {{dir}})-catplus {{dir}}/helm-chart --output-dir {{dir}}
+# Render Helm charts [intermediate step before rendering ytt manifests]
+[private]
+render-helm: clean fetch
+  # render external helm charts with our values into pre-build directory
+  cd {{root_dir}} && \
+    fd '^helm$' src/ \
+      -x sh -c 'helm template $(basename {//}) external/helm/$(basename {//}) -f {}/values.yaml --output-dir {}/out'
+
+# Render ytt manifests
+[private]
+render-ytt: render-helm
+  # copy all non-helm files to the pre-build directory and render them
+  cd {{root_dir}} && \
+    fd '^ytt$' src/ \
+      -x sh -c 'ytt -f {}/values.yaml -f external/ytt/$(basename {//}) --output-files {}/out'
+
+# Render manifests
+render: render-ytt
 
 alias apply := deploy
 # Apply manifests to the cluster.

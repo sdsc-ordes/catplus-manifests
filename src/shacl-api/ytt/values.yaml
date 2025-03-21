@@ -1,0 +1,11 @@
+#@data/values
+
+---
+name: "shacl-api"
+version: "0.1.0"
+image: "ghcr.io/sdsc-ordes/shacl-api:latest"
+namespace: "shacl"
+replicas: 3
+shapes:
+  path: "/data/shapes.ttl"
+  url: 'https://github.com/sdsc-ordes/catplus-ontology/releases/download/v0.1.0/catplus_ontology.ttl'

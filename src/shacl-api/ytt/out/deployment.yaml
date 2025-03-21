@@ -4,36 +4,36 @@ metadata:
   name: shacl-api
   namespace: shacl
   labels:
-    app.kubernetes.io/version: ""
+    app.kubernetes.io/version: 0.1.0
     app.kubernetes.io/name: shacl-api
     app.kubernetes.io/managed-by: ytt
     app.kubernetes.io/component: microservice
 spec:
-  replicas: 1
+  replicas: 3
   strategy:
     type: Recreate
   selector:
     matchLabels:
-      app.kubernetes.io/version: ""
+      app.kubernetes.io/version: 0.1.0
       app.kubernetes.io/name: shacl-api
       app.kubernetes.io/managed-by: ytt
       app.kubernetes.io/component: microservice
   template:
     metadata:
       labels:
-        app.kubernetes.io/version: ""
+        app.kubernetes.io/version: 0.1.0
         app.kubernetes.io/name: shacl-api
         app.kubernetes.io/managed-by: ytt
         app.kubernetes.io/component: microservice
     spec:
       restartPolicy: Always
       containers:
-        - name: shacl-api
-          image: ghcr.io/sdsc-ordes/shacl-api:latest
-          ports:
-            - containerPort: 15400
-          env:
-            - name: SHAPES_PATH
-              value: /data/shapes.ttl
-            - name: SHAPES_URL
-              value: https://github.com/sdsc-ordes/catplus-ontology/releases/download/v0.1.0/catplus_ontology.ttl
+      - name: shacl-api
+        image: ghcr.io/sdsc-ordes/shacl-api:latest
+        ports:
+        - containerPort: 15400
+        env:
+        - name: SHAPES_PATH
+          value: /data/shapes.ttl
+        - name: SHAPES_URL
+          value: https://github.com/sdsc-ordes/catplus-ontology/releases/download/v0.1.0/catplus_ontology.ttl

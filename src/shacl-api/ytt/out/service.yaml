@@ -3,18 +3,18 @@ kind: Service
 metadata:
   name: shacl-api
   labels:
-    app.kubernetes.io/version: ""
+    app.kubernetes.io/version: 0.1.0
     app.kubernetes.io/name: shacl-api
     app.kubernetes.io/managed-by: ytt
     app.kubernetes.io/component: microservice
 spec:
   type: ClusterIP
   ports:
-    - name: "8001"
-      port: 8001
-      targetPort: 15400
+  - name: "8001"
+    port: 8001
+    targetPort: 15400
   selector:
-    app.kubernetes.io/version: ""
+    app.kubernetes.io/version: 0.1.0
     app.kubernetes.io/name: shacl-api
     app.kubernetes.io/managed-by: ytt
     app.kubernetes.io/component: microservice

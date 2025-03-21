@@ -1,28 +1,29 @@
-# Source: qlever-external/charts/qlever/templates/deployment-server.yaml
+---
+# Source: qlever/templates/deployment-ui.yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: qlever-catplus-server
+  name: qlever-ui
   labels:
-    app.kubernetes.io/component: server
+    app.kubernetes.io/component: ui
     helm.sh/chart: qlever-0.2.3
     app.kubernetes.io/name: qlever
-    app.kubernetes.io/instance: qlever-catplus
+    app.kubernetes.io/instance: qlever
     app.kubernetes.io/version: "v0.5.5"
     app.kubernetes.io/managed-by: Helm
 spec:
   selector:
     matchLabels:
-      app.kubernetes.io/component: server
+      app.kubernetes.io/component: ui
       app.kubernetes.io/name: qlever
-      app.kubernetes.io/instance: qlever-catplus
+      app.kubernetes.io/instance: qlever
   template:
     metadata:
       labels:
-        app.kubernetes.io/component: server
+        app.kubernetes.io/component: ui
         helm.sh/chart: qlever-0.2.3
         app.kubernetes.io/name: qlever
-        app.kubernetes.io/instance: qlever-catplus
+        app.kubernetes.io/instance: qlever
         app.kubernetes.io/version: "v0.5.5"
         app.kubernetes.io/managed-by: Helm
     spec:
@@ -33,7 +34,7 @@ spec:
         runAsNonRoot: true
         runAsUser: 65534
       containers:
-        - name: qlever-server
+        - name: qlever-ui
           securityContext:
             allowPrivilegeEscalation: false
             capabilities: {}
@@ -42,11 +43,11 @@ spec:
             runAsNonRoot: true
             runAsUser: 65534
             seLinuxOptions: {}
-          image: "ghcr.io/zazukoians/qlever-server:v0.5.5"
+          image: "ghcr.io/zazukoians/qlever-ui:v0.5.5"
           imagePullPolicy: IfNotPresent
           ports:
             - name: http
-              containerPort: 7001
+              containerPort: 7002
               protocol: TCP
           env:
             - name: QLEVER_DATA_BASE_URL
@@ -60,7 +61,7 @@ spec:
             - name: QLEVER_INDEX_INPUT_FILES
               value: "catplus-ontology.nt"
             - name: QLEVER_INDEX_SETTINGS_JSON
-              value: '{"ascii-prefixes-only":false,"num-triples-per-batch":100000}'
+              value: "{\"ascii-prefixes-only\":false,\"num-triples-per-batch\":100000}"
             - name: QLEVER_RUNTIME_SYSTEM
               value: "native"
             - name: QLEVER_SERVER_ACCESS_TOKEN
@@ -82,12 +83,15 @@ spec:
             - name: QLEVER_UI_UI_PORT
               value: "7002"
           livenessProbe:
-            tcpSocket:
+            httpGet:
+              path: /
               port: http
           readinessProbe:
-            tcpSocket:
+            httpGet:
+              path: /
               port: http
-          resources: {}
+          resources:
+            {}
           volumeMounts:
             - mountPath: /data
               name: data

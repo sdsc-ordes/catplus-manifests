@@ -1,7 +1,7 @@
 apiVersion: vendir.k14s.io/v1alpha1
 kind: Config
 directories:
-  - path: _ytt_lib/shacl
+  - path: ytt/shacl-api
     contents:
       - path: .
         git:
