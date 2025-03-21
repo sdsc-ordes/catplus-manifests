@@ -50,7 +50,7 @@ render:
 
 alias apply := deploy
 # Apply manifests to the cluster.
-deploy dir=".":
+deploy dir="./src/":
     @cd "{{root_dir}}" && \
     kubectl apply --kustomize {{dir}}
 
