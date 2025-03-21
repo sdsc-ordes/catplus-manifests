@@ -1,0 +1,17 @@
+apiVersion: vendir.k14s.io/v1alpha1
+directories:
+- contents:
+  - git:
+      commitTitle: 'fix(just): update manifest paths, simplify ytt command'
+      sha: c588df7f8ad0fc9112c71d9f21b6a57f1cc3cfce
+      tags:
+      - v0.0.5-91-gc588df7
+    path: .
+  path: _ytt_lib/shacl
+- contents:
+  - helmChart:
+      appVersion: v0.5.5
+      version: 0.2.3
+    path: .
+  path: helm/qlever
+kind: LockConfig

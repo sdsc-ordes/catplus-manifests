@@ -14,8 +14,12 @@ alias fmt := format
 format *args:
     treefmt {{args}}
 
+# Fetch manifest dependencies
+fetch:
+  vendir sync -f vendir.yaml --chdir external
+
 # Render helm templates
-render dir=".":
+render dir=".": fetch
     @cd "{{root_dir}}" && \
     helm dependency update {{dir}}/helm-chart
     helm template $(basename {{dir}})-catplus {{dir}}/helm-chart --output-dir {{dir}}
