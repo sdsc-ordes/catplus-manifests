@@ -5,7 +5,7 @@
 
 # third party manifests
 external/helm/*
-external/_ytt_lib/*
+external/ytt/*
 #data
 tests/shacl-api/data/
 #env files
