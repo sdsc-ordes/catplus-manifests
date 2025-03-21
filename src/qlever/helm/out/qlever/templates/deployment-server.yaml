@@ -61,7 +61,7 @@ spec:
             - name: QLEVER_INDEX_INPUT_FILES
               value: "catplus-ontology.nt"
             - name: QLEVER_INDEX_SETTINGS_JSON
-              value: "{\"ascii-prefixes-only\":false,\"num-triples-per-batch\":100000}"
+              value: '{"ascii-prefixes-only":false,"num-triples-per-batch":100000}'
             - name: QLEVER_RUNTIME_SYSTEM
               value: "native"
             - name: QLEVER_SERVER_ACCESS_TOKEN
@@ -88,8 +88,7 @@ spec:
           readinessProbe:
             tcpSocket:
               port: http
-          resources:
-            {}
+          resources: {}
           volumeMounts:
             - mountPath: /data
               name: data

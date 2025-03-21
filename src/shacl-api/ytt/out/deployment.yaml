@@ -28,12 +28,12 @@ spec:
     spec:
       restartPolicy: Always
       containers:
-      - name: shacl-api
-        image: ghcr.io/sdsc-ordes/shacl-api:latest
-        ports:
-        - containerPort: 15400
-        env:
-        - name: SHAPES_PATH
-          value: /data/shapes.ttl
-        - name: SHAPES_URL
-          value: https://github.com/sdsc-ordes/catplus-ontology/releases/download/v0.1.0/catplus_ontology.ttl
+        - name: shacl-api
+          image: ghcr.io/sdsc-ordes/shacl-api:latest
+          ports:
+            - containerPort: 15400
+          env:
+            - name: SHAPES_PATH
+              value: /data/shapes.ttl
+            - name: SHAPES_URL
+              value: https://github.com/sdsc-ordes/catplus-ontology/releases/download/v0.1.0/catplus_ontology.ttl
