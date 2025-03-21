@@ -52,6 +52,7 @@
             bash
             coreutils
             curl
+            fd
             findutils
             git
             jq

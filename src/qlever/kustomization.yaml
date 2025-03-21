@@ -3,8 +3,8 @@ kind: Kustomization
 resources:
   - ./namespaces.yaml
   - ./qlever-pvc.yaml
-  - qlever-external/charts/qlever/templates/deployment-server.yaml
-  - qlever-external/charts/qlever/templates/deployment-ui.yaml
-  - qlever-external/charts/qlever/templates/service-server.yaml
-  - qlever-external/charts/qlever/templates/service-ui.yaml
+  - ./helm/out/qlever/templates/deployment-server.yaml
+  - ./helm/out/qlever/templates/deployment-ui.yaml
+  - ./helm/out/qlever/templates/service-server.yaml
+  - ./helm/out/qlever/templates/service-ui.yaml
 namespace: qlever

@@ -3,6 +3,9 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/main/VisualStudio.gitignore
 
+# third party manifests
+external/helm/*
+external/ytt/*
 #data
 tests/shacl-api/data/
 #env files
