@@ -7,16 +7,16 @@ resources:
   - ./artifact-repository-configmap.yaml
   - ./s3-qlever-workflow.yaml
 patches:
-- path: patch-list-namespaces.yaml
-  target:
-    kind: ClusterRole
-    name: argo-cluster-role
-- path: patch-add-role-ns.yaml
-  target:
-    kind: ClusterRoleBinding
-    name: argo-server-binding
-- path: patch-add-role-ns.yaml
-  target:
-    kind: ClusterRoleBinding
-    name: argo-binding
+  - path: patch-list-namespaces.yaml
+    target:
+      kind: ClusterRole
+      name: argo-cluster-role
+  - path: patch-add-role-ns.yaml
+    target:
+      kind: ClusterRoleBinding
+      name: argo-server-binding
+  - path: patch-add-role-ns.yaml
+    target:
+      kind: ClusterRoleBinding
+      name: argo-binding
 namespace: argo

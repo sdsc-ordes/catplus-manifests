@@ -1,5 +1,4 @@
 creation_rules:
-
   - path_regex: secrets/.*
     encrypted_regex: "^.*(user|password|token|key)"
     age: >-

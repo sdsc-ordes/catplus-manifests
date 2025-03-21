@@ -4,7 +4,6 @@ description: A Helm chart for qlever
 type: application
 version: 0.1.0
 appVersion: "0.1.0"
-
 dependencies:
   - name: "qlever"
     version: "0.2.3"

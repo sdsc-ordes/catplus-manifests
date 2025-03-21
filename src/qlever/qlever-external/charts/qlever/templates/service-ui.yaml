@@ -1,4 +1,3 @@
----
 # Source: qlever-external/charts/qlever/templates/service-ui.yaml
 apiVersion: v1
 kind: Service

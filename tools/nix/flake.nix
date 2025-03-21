@@ -22,14 +22,22 @@
 
     flake-utils.url = "github:numtide/flake-utils";
 
+    # Format the repo with nix-treefmt.
+    treefmt-nix = {
+      url = "github:numtide/treefmt-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
   };
 
   outputs =
     {
+      self,
       nixpkgs,
       flake-utils,
+      treefmt-nix,
       ...
-    }:
+    }@inputs:
     let
       # The function which builds the flake output attrMap.
       defineOutput =
@@ -50,8 +58,11 @@
             just
             kubectl
             sops
+            (import ./packages/treefmt.nix { inherit inputs pkgs; })
+            vendir
             zsh
             yamlfmt
+            ytt
           ];
 
         in

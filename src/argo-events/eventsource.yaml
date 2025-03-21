@@ -31,7 +31,6 @@ spec:
         key: secretkey
         # Name of the K8s secret that contains the secret key
         name: artifacts-s3
-
 #    example-with-filter:
 #      bucket:
 #        name: mybucket
