@@ -24,7 +24,7 @@ fetch:
 
 # Render Helm charts [intermediate step before rendering ytt manifests]
 [private]
-render-helm: clean fetch
+render-helm:
   # render external helm charts with our values into src/<service>/helm/out
   cd {{root_dir}} && \
     fd '^helm$' src/ \
@@ -32,14 +32,20 @@ render-helm: clean fetch
 
 # Render ytt manifests
 [private]
-render-ytt: render-helm
+render-ytt:
   # render external ytt templates with our values into src/<service>/ytt/out
   cd {{root_dir}} && \
     fd '^ytt$' src/ \
       -x sh -c 'ytt -f {}/values.yaml -f external/ytt/$(basename {//}) --output-files {}/out'
 
 # Render manifests
-render: render-ytt
+render:
+  cd {{root_dir}} && \
+    just clean && \
+    just fetch && \
+    just render-helm && \
+    just render-ytt && \
+    just format
 
 alias apply := deploy
 # Apply manifests to the cluster.
