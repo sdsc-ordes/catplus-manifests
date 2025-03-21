@@ -15,8 +15,8 @@ spec:
               template: s3-retriever
               # - - name: post-qlever
               #     template: http
-      # Test: add file to artifact-repository bucket. 
-      # use this workflow to list it. 
+      # Test: add file to artifact-repository bucket.
+      # use this workflow to list it.
       # Then replace artifact bucket with another input bucket
       # Then test with http
       - name: s3-retriever
