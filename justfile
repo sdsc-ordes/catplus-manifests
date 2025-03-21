@@ -1,8 +1,5 @@
 set positional-arguments
 set shell := ["bash", "-cue"]
-build_dir := root_dir + "/build"
-pre_dir := build_dir + "/pre"
-out_dir := build_dir + "/manifests"
 
 root_dir := `git rev-parse --show-toplevel`
 
@@ -28,7 +25,7 @@ fetch:
 # Render Helm charts [intermediate step before rendering ytt manifests]
 [private]
 render-helm: clean fetch
-  # render external helm charts with our values into pre-build directory
+  # render external helm charts with our values into src/<service>/helm/out
   cd {{root_dir}} && \
     fd '^helm$' src/ \
       -x sh -c 'helm template $(basename {//}) external/helm/$(basename {//}) -f {}/values.yaml --output-dir {}/out'
@@ -36,7 +33,7 @@ render-helm: clean fetch
 # Render ytt manifests
 [private]
 render-ytt: render-helm
-  # copy all non-helm files to the pre-build directory and render them
+  # render external ytt templates with our values into src/<service>/ytt/out
   cd {{root_dir}} && \
     fd '^ytt$' src/ \
       -x sh -c 'ytt -f {}/values.yaml -f external/ytt/$(basename {//}) --output-files {}/out'
@@ -52,7 +49,7 @@ deploy dir=".":
 
 alias dev := nix-develop
 # Enter a Nix development shell.
-nix-develop *args:
+develop *args:
     @echo "Starting nix developer shell in './tools/nix/flake.nix'."
     @cd "{{root_dir}}" && \
     cmd=("$@") && \
