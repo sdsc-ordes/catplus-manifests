@@ -47,7 +47,7 @@ deploy dir=".":
     @cd "{{root_dir}}" && \
     kubectl apply --kustomize {{dir}}
 
-alias dev := nix-develop
+alias dev := develop
 # Enter a Nix development shell.
 develop *args:
     @echo "Starting nix developer shell in './tools/nix/flake.nix'."
