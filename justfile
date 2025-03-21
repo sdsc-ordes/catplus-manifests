@@ -16,6 +16,7 @@ format *args:
 
 clean *args:
     @echo "Cleaning up..."
+    rm -rf external/{helm,ytt}/**
     rm -rf src/**/{ytt,helm}/out
 
 # Fetch manifest dependencies
