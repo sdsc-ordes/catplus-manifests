@@ -14,7 +14,8 @@ alias fmt := format
 format *args:
     treefmt {{args}}
 
-clean *args:
+# Clean up external and generated manifests.
+clean:
     @echo "Cleaning up..."
     rm -rf external/{helm,ytt}/**
     rm -rf src/**/{ytt,helm}/out
