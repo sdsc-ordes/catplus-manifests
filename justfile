@@ -26,32 +26,32 @@ fetch:
 
 # Render Helm charts [intermediate step before rendering ytt manifests]
 [private]
-render-helm:
+render-helm dir="src":
   # render external helm charts with our values into src/<service>/helm/out
   cd {{root_dir}} && \
-    fd '^helm$' src/ \
+    fd '^helm$' {{dir}} \
       -x sh -c 'helm template $(basename {//}) external/helm/$(basename {//}) -f {}/values.yaml --output-dir {}/out'
 
 # Render ytt manifests
 [private]
-render-ytt:
+render-ytt dir="src":
   # render external ytt templates with our values into src/<service>/ytt/out
   cd {{root_dir}} && \
-    fd '^ytt$' src/ \
+    fd '^ytt$' {{dir}} \
       -x sh -c 'ytt -f {}/values.yaml -f external/ytt/$(basename {//}) --output-files {}/out'
 
 # Render manifests
-render:
+render dir="src":
   cd {{root_dir}} && \
     just clean && \
     just fetch && \
-    just render-helm && \
-    just render-ytt && \
+    just render-helm {{dir}} && \
+    just render-ytt {{dir}} && \
     just format
 
 alias apply := deploy
 # Apply manifests to the cluster.
-deploy dir="./src/":
+deploy dir="src":
     @cd "{{root_dir}}" && \
     kubectl apply --kustomize {{dir}}
 
