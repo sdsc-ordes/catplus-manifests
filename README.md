@@ -15,9 +15,9 @@ To build and enter the development shell, use `just develop`.
 
 ## Structure
 
-* `external/`: third party resources
-* `src/`: deployable manifests
-* secrets are encrypted with sops+age and persisted in `src/secrets/`
+- `external/`: third party resources
+- `src/`: deployable manifests
+- secrets are encrypted with sops+age and persisted in `src/secrets/`
 
 Each service is structured as follows (supported tools are `ytt` and `helm`):
 
@@ -66,4 +66,3 @@ Either: run `just secrets edit <secret-file>` to decrypt/edit/encrypt secrets on
 1. Run `just secrets decrypt` and open the newly created `secrets/secrets.dec.yaml` in your editor.
 2. Once the changes are made, re-encrypt them using `just secrets encrypt`.
 3. Commit changes.
-
