@@ -9,7 +9,7 @@ metadata:
     app.kubernetes.io/managed-by: ytt
     app.kubernetes.io/component: microservice
 spec:
-  replicas: 3
+  replicas: 1
   strategy:
     type: Recreate
   selector:
