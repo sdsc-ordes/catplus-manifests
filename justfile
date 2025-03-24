@@ -43,7 +43,6 @@ render-ytt dir="src":
 # Render manifests
 render dir="src":
   cd {{root_dir}} && \
-    just clean && \
     just fetch && \
     just render-helm {{dir}} && \
     just render-ytt {{dir}} && \
