@@ -2,10 +2,10 @@ apiVersion: vendir.k14s.io/v1alpha1
 directories:
 - contents:
   - git:
-      commitTitle: 'fix(just): update manifest paths, simplify ytt command'
-      sha: c588df7f8ad0fc9112c71d9f21b6a57f1cc3cfce
+      commitTitle: 'fix(compose): context and paths (#16)'
+      sha: 527b9d24945c0cd253af58e71fb469ba81ed28b9
       tags:
-      - v0.0.5-91-gc588df7
+      - v0.0.5-10-g527b9d2
     path: .
   path: ytt/shacl-api
 - contents:
