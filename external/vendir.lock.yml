@@ -1,0 +1,17 @@
+apiVersion: vendir.k14s.io/v1alpha1
+directories:
+- contents:
+  - git:
+      commitTitle: 'fix(compose): context and paths (#16)'
+      sha: 527b9d24945c0cd253af58e71fb469ba81ed28b9
+      tags:
+      - v0.0.5-10-g527b9d2
+    path: .
+  path: ytt/shacl-api
+- contents:
+  - helmChart:
+      appVersion: v0.5.5
+      version: 0.2.3
+    path: .
+  path: helm/qlever
+kind: LockConfig

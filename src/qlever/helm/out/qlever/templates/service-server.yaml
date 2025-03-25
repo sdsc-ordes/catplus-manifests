@@ -1,23 +1,24 @@
-# Source: qlever-external/charts/qlever/templates/service-ui.yaml
+---
+# Source: qlever/templates/service-server.yaml
 apiVersion: v1
 kind: Service
 metadata:
-  name: qlever-catplus-ui
+  name: qlever-server
   labels:
-    app.kubernetes.io/component: ui
+    app.kubernetes.io/component: server
     helm.sh/chart: qlever-0.2.3
     app.kubernetes.io/name: qlever
-    app.kubernetes.io/instance: qlever-catplus
+    app.kubernetes.io/instance: qlever
     app.kubernetes.io/version: "v0.5.5"
     app.kubernetes.io/managed-by: Helm
 spec:
   type: ClusterIP
   ports:
-    - port: 7002
+    - port: 7001
       targetPort: http
       protocol: TCP
       name: http
   selector:
-    app.kubernetes.io/component: ui
+    app.kubernetes.io/component: server
     app.kubernetes.io/name: qlever
-    app.kubernetes.io/instance: qlever-catplus
+    app.kubernetes.io/instance: qlever

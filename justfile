@@ -14,21 +14,49 @@ alias fmt := format
 format *args:
     treefmt {{args}}
 
-# Render helm templates
-render dir=".":
-    @cd "{{root_dir}}" && \
-    helm dependency update {{dir}}/helm-chart
-    helm template $(basename {{dir}})-catplus {{dir}}/helm-chart --output-dir {{dir}}
+# Clean up external and generated manifests.
+clean:
+    @echo "Cleaning up..."
+    rm -rf external/{helm,ytt}/**
+    rm -rf src/**/{ytt,helm}/out
+
+# Fetch manifest dependencies
+fetch:
+  vendir sync -f vendir.yaml --chdir external
+
+# Render Helm charts [intermediate step before rendering ytt manifests]
+[private]
+render-helm dir="src":
+  # render external helm charts with our values into src/<service>/helm/out
+  cd {{root_dir}} && \
+    fd '^helm$' {{dir}} \
+      -x sh -c 'helm template $(basename {//}) external/helm/$(basename {//}) -f {}/values.yaml --output-dir {}/out'
+
+# Render ytt manifests
+[private]
+render-ytt dir="src":
+  # render external ytt templates with our values into src/<service>/ytt/out
+  cd {{root_dir}} && \
+    fd '^ytt$' {{dir}} \
+      -x sh -c 'ytt -f {}/values.yaml -f external/ytt/$(basename {//}) --output-files {}/out'
+
+# Render manifests
+render dir="src":
+  cd {{root_dir}} && \
+    just fetch && \
+    just render-helm {{dir}} && \
+    just render-ytt {{dir}} && \
+    just format
 
 alias apply := deploy
 # Apply manifests to the cluster.
-deploy dir=".":
+deploy dir="src":
     @cd "{{root_dir}}" && \
     kubectl apply --kustomize {{dir}}
 
-alias dev := nix-develop
+alias dev := develop
 # Enter a Nix development shell.
-nix-develop *args:
+develop *args:
     @echo "Starting nix developer shell in './tools/nix/flake.nix'."
     @cd "{{root_dir}}" && \
     cmd=("$@") && \

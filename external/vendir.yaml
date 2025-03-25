@@ -1,0 +1,19 @@
+apiVersion: vendir.k14s.io/v1alpha1
+kind: Config
+directories:
+  - path: ytt/shacl-api
+    contents:
+      - path: .
+        git:
+          url: https://github.com/sdsc-ordes/shacl-api
+          ref: origin/develop
+        newRootPath: tools/deploy/
+
+  - path: helm/qlever
+    contents:
+      - path: .
+        helmChart:
+          name: qlever
+          version: 0.2.3
+          repository:
+            url: https://charts.zazuko.com

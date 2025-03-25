@@ -1,8 +1,5 @@
 # Cat+ Manifests
 
-> [!WARNING]
-> This is a WIP repository, it is not yet stable.
-
 ## Summary
 
 This repository contains all the manifests for Cat+ to deploy on Kubernetes.
@@ -14,7 +11,28 @@ Cat+ is composed of automated pipelines, a front-end and a databases. All of the
 > [!NOTE] We assume that you already have access to a kubernetes cluster and that nix is installed ([install here](https://github.com/DeterminateSystems/nix-installer?tab=readme-ov-file#determinate-nix-installer)).
 
 We provide a nix-based development shell which includes all dependencies required to manage and deploy manifests.
-To build and enter the development shell, use `just nix-develop`.
+To build and enter the development shell, use `just develop`.
+
+## Structure
+
+- `external/`: third party resources
+- `src/`: deployable manifests
+- secrets are encrypted with sops+age and persisted in `src/secrets/`
+
+Each service is structured as follows (supported tools are `ytt` and `helm`):
+
+```
+├── external
+│  └── <tool>
+│     └── <service>/... # <- third party templates
+└── src
+   └── <service>
+      ├── additional-manifest.yaml # <- custom manifests for this deployment
+      ├── kustomization.yaml # <- kustomization file to select resources
+      └── <tool>
+         ├── out/... # <- rendered manifests
+         └── values.yaml # <- values used for templating
+```
 
 ## How to Use
 
@@ -43,11 +61,8 @@ Running `just secrets deploy` will decrypt the secrets into a temporary file, de
 #### Editing secrets
 
 To edit secrets:
+Either: run `just secrets edit <secret-file>` to decrypt/edit/encrypt secrets on the fly, or:
 
 1. Run `just secrets decrypt` and open the newly created `secrets/secrets.dec.yaml` in your editor.
 2. Once the changes are made, re-encrypt them using `just secrets encrypt`.
 3. Commit changes.
-
-## Contribute
-
-To be defined.
