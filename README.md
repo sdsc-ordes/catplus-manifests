@@ -8,7 +8,8 @@ Cat+ is composed of automated pipelines, a front-end and a databases. All of the
 
 ## Installation guidelines
 
-> [!NOTE] We assume that you already have access to a kubernetes cluster and that nix is installed ([install here](https://github.com/DeterminateSystems/nix-installer?tab=readme-ov-file#determinate-nix-installer)).
+> [!NOTE]
+> We assume that you already have access to a kubernetes cluster and that nix is installed ([install here](https://github.com/DeterminateSystems/nix-installer?tab=readme-ov-file#determinate-nix-installer)).
 
 We provide a nix-based development shell which includes all dependencies required to manage and deploy manifests.
 To build and enter the development shell, use `just develop`.
